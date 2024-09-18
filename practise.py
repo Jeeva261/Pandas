@@ -30,3 +30,54 @@ egg=data.groupby("name").agg({
     "score":["max","min","mean"]
 })
 print(egg)
+
+# Load a dataset with missing values and handle them using different techniques
+# Write a script to replace missing values with the mean of the column
+import pandas as pd
+
+df=pd.read_csv("dirtydata.csv")
+df.dropna(inplace=True)
+print(df)
+
+df=pd.read_csv("dirtydata.csv")
+df.fillna(3000000,inplace=True)
+print(df)
+
+df=pd.read_csv("dirtydata.csv")
+res=df.info()
+print(res)
+
+df=pd.read_csv("dirtydata.csv")
+df["Calories"].fillna(df["Calories"].mode()[0],inplace=True)
+print(df)
+
+df=pd.read_csv("dirtydata.csv")
+df["Date"]=pd.to_datetime(df["Date"])
+df.dropna(subset="Date",inplace=True)
+print(df)
+
+df=pd.read_csv("dirtydata.csv")
+df.loc[7,"Duration"]=120
+print(df)
+
+
+df=pd.read_csv("dirtydata.csv")
+for i in df.index:
+    if df.loc[i,"Duration"]>120:
+        df.loc[i,"Duration"]=130
+
+print(df)
+
+df=pd.read_csv("dirtydata.csv")
+for i in df.index:
+    if df.loc[i,"Duration"]>120:
+        df.drop(i,inplace=True)
+print(df)
+
+df=pd.read_csv("dirtydata.csv")
+res=df.duplicated()
+print(res)
+
+df=pd.read_csv("dirtydata.csv")
+res=df.drop_duplicates()
+print(res)
